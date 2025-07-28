@@ -132,6 +132,26 @@
     </div>
 
     <script>
+        const urlParams = new URLSearchParams(window.location.search);
+const dashboardOnly = urlParams.get('dashboardOnly') === 'true';
+
+if (dashboardOnly) {
+  // hide the public form and admin toggle button
+  document.getElementById('nominationForm').style.display = 'none';
+  document.querySelector('.admin-toggle').style.display = 'none';
+
+  // force‑show the admin dashboard
+  isAdminLoggedIn = true;
+  document.getElementById('adminPanel').classList.add('active');
+  document.getElementById('adminLogin').style.display = 'none';
+  document.getElementById('adminDashboard').style.display = 'block';
+
+  // load and render only the vote bars
+  loadSubmissions();
+
+  // STOP—don’t bind any of the normal form or admin button handlers
+  return;
+}
         let submissions = [];
         let isAdminLoggedIn = false;
         const ADMIN_PASSWORD = 'admin123';
